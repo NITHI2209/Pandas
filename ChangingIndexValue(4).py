@@ -28,3 +28,7 @@ Indexing using function "loc" - label based indexing
 NOTE: In label based indexing start value as well as stop value both are included in the output
 >>> s.loc["grapes"]
 np.int64(30)
+>>> s.loc[["apple","banana"]]
+apple     10
+banana    20
+Name: calories, dtype: int64
