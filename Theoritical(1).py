@@ -7,8 +7,9 @@ Key points:
 2)Used to handle Excel-like or SQL-like data
 3)Allows reading data from CSV, Excel, SQL, JSON, etc.
 4)Provides two main data structures:
-         1) Series → 1-dimensional data (like a column)
-         2) DataFrame → 2-dimensional data (like a table)  
+         1) Series → 1-dimensional data (like a column)(either string or int) (sizeimmutable-alteration can be done but it will consider as new series not on original one )
+            NOTE: If one value is converted into string then all values of the coulumn will be converted into string 
+         2) DataFrame → 2-dimensional data (like a table)  (hetergenous - int in one column , string in one column, sizemutable - any rows or columns can be deleted or altered)
 
 why pandas:
 1)Import datasets
