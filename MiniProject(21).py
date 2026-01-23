@@ -1,3 +1,4 @@
+#MINI PROJECT OF ATTRITON RATE ANALYSIS
 >>> import pandas as pd
 >>> import numpy as np
 #DATA SET
@@ -85,7 +86,7 @@ max     108.00000  40.000000  60000.000000
 7    35000.0
 Name: Salary, dtype: float64
 
-CHECK FOR DUPLICATES
+#CHECK FOR DUPLICATES
 >>> df_dup = df[df.duplicated()]
 >>> print(df_dup)
 Empty DataFrame
@@ -97,5 +98,45 @@ Total employees
 >>> df["EmployeeID"].count()
 np.int64(8)
 
-Attrition count
+#ATTRITION COUNT
+>>> df["Attrition"].value_counts()
+Attrition
+No     5
+Yes    3
+Name: count, dtype: int64
+
+#ATTRITION BY DEPARTMENT
+>>> df.groupby("Department")["Attrition"].value_counts()
+Department  Attrition
+Finance     No           2
+HR          No           2
+            Yes          1
+IT          Yes          2
+            No           1
+Name: count, dtype: int64
+
+#SALARY ANALYSIS:
+>>> df["Salary"].mean()
+np.float64(43428.57142857143)
+>>> df.groupby("Department")["Salary"].mean()
+Department
+Finance    45000.000000
+HR         32333.333333
+IT         54000.000000
+Name: Salary, dtype: float64
+
+#AGE ANALYSIS:
+>>> df["Age"].mean()
+np.float64(31.285714285714285)
+>>> df.groupby("Attrition")["Age"].mean()
+Attrition
+No     32.500000
+Yes    29.666667
+Name: Age, dtype: float64
+
+#ATTRITION RATE:
+>>> attrition_rate = (df["Attrition"] == "Yes").mean()*100
+>>> print(attrition_rate)
+37.5
+
 
