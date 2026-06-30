@@ -1,34 +1,53 @@
->>> index = ["apple","banana","grapes","orange","strawberry"]
->>> s.index = index
->>> print(s)
-apple         10
-banana        20
-grapes        30
-orange        40
-strawberry    50
-Name: numbers, dtype: int64
->>> s.name = "calories"
->>> print(s)
-apple         10
-banana        20
-grapes        30
-orange        40
-strawberry    50
-Name: calories, dtype: int64
+import pandas as pd
 
-Indexing:
->>> s["grapes"]
-np.int64(30)
->>> s[["grapes","apple"]]
-grapes    30
-apple     10
-Name: calories, dtype: int64
+print("=" * 60)
+print("CHANGING INDEX VALUES")
+print("=" * 60)
 
-Indexing using function "loc" - label based indexing 
-NOTE: In label based indexing start value as well as stop value both are included in the output
->>> s.loc["grapes"]
-np.int64(30)
->>> s.loc[["apple","banana"]]
-apple     10
-banana    20
-Name: calories, dtype: int64
+# Creating a Series
+s = pd.Series([10, 20, 30, 40, 50], name="numbers")
+
+print("Original Series:")
+print(s)
+
+# ---------------------------------------------------
+# Changing Index Labels
+# ---------------------------------------------------
+
+index = ["apple", "banana", "grapes", "orange", "strawberry"]
+s.index = index
+
+print("\nSeries after changing index labels:")
+print(s)
+
+# ---------------------------------------------------
+# Changing the Series Name
+# ---------------------------------------------------
+
+s.name = "calories"
+
+print("\nSeries after changing the name:")
+print(s)
+
+# ---------------------------------------------------
+# Label-Based Indexing
+# ---------------------------------------------------
+
+print("\nAccessing a single value using label:")
+print(s["grapes"])
+
+print("\nAccessing multiple values using labels:")
+print(s[["grapes", "apple"]])
+
+# ---------------------------------------------------
+# loc Indexing
+# ---------------------------------------------------
+
+print("\nUsing loc (Label-Based Indexing)")
+print("Note: In loc indexing, both the start and stop labels are included.")
+
+print("\nSingle label using loc:")
+print(s.loc["grapes"])
+
+print("\nMultiple labels using loc:")
+print(s.loc[["apple", "banana"]])

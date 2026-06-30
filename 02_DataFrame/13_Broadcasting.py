@@ -1,11 +1,38 @@
->>> df["Salary"] = df["Salary"] + 5000
->>> print(df)
-      Name Department   Salary
-0    Alice         HR  55000.0
-1      Bob         IT  65000.0
-2  Charlie    Finance  75000.0
-3    David         IT  67000.0
-4      Eve         HR      NaN
-5    Alice         HR  55000.0
+import pandas as pd
+import numpy as np
 
-NOTE: Broadcasting is performing the operations with any diff shapes without looping 
+print("=" * 60)
+print("BROADCASTING IN PANDAS")
+print("=" * 60)
+
+# Creating a dictionary
+data = {
+    "Name": ["Alice", "Bob", "Charlie", "David", "Eve", "Alice"],
+    "Department": ["HR", "IT", "Finance", "IT", "HR", "HR"],
+    "Salary": [50000, 60000, 70000, 62000, np.nan, 50000]
+}
+
+# Creating the DataFrame
+df = pd.DataFrame(data)
+
+print("Original DataFrame:")
+print(df)
+
+# ---------------------------------------------------
+# Broadcasting
+# ---------------------------------------------------
+
+print("\nAdding ₹5000 to every employee's salary...\n")
+
+df["Salary"] = df["Salary"] + 5000
+
+print("Updated DataFrame:")
+print(df)
+
+# ---------------------------------------------------
+# Note
+# ---------------------------------------------------
+
+print("\nNote:")
+print("Broadcasting performs an operation on an entire column")
+print("without using an explicit loop.")

@@ -1,24 +1,47 @@
-Rename:
->>> df.rename(columns={"Department":"Dept"},inplace = True)
->>> print(df)
-      Name     Dept   Salary
-0    Alice       HR  55000.0
-1      Bob       IT  65000.0
-2  Charlie  Finance  75000.0
-3    David       IT  67000.0
-4      Eve       HR      NaN
-5    Alice       HR  55000.0
+import pandas as pd
+import numpy as np
 
-Unique Values:
->>> df["Dept"].unique()
-array(['HR', 'IT', 'Finance'], dtype=object)
->>> df["Salary"].unique()
-array([55000., 65000., 75000., 67000.,    nan])
+print("=" * 60)
+print("RENAMING, UNIQUE VALUES & VALUE COUNTS")
+print("=" * 60)
 
-Counting:
->>> df["Dept"].value_counts()
-Dept
-HR         3
-IT         2
-Finance    1
-Name: count, dtype: int64
+# Creating a dictionary
+data = {
+    "Name": ["Alice", "Bob", "Charlie", "David", "Eve", "Alice"],
+    "Department": ["HR", "IT", "Finance", "IT", "HR", "HR"],
+    "Salary": [55000, 65000, 75000, 67000, np.nan, 55000]
+}
+
+# Creating the DataFrame
+df = pd.DataFrame(data)
+
+print("Original DataFrame:")
+print(df)
+
+# ---------------------------------------------------
+# Renaming a Column
+# ---------------------------------------------------
+
+print("\nRenaming 'Department' to 'Dept'...\n")
+
+df.rename(columns={"Department": "Dept"}, inplace=True)
+
+print("Updated DataFrame:")
+print(df)
+
+# ---------------------------------------------------
+# Unique Values
+# ---------------------------------------------------
+
+print("\nUnique Values in 'Dept':")
+print(df["Dept"].unique())
+
+print("\nUnique Values in 'Salary':")
+print(df["Salary"].unique())
+
+# ---------------------------------------------------
+# Value Counts
+# ---------------------------------------------------
+
+print("\nCount of Employees in Each Department:")
+print(df["Dept"].value_counts())

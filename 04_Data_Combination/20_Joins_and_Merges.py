@@ -1,82 +1,136 @@
->>> department_info = {
-... "Department" : ["HR","IT","Finance"],
-... "Location" : ["New york","San Fransisco","Chicago"],
-... "Manager" : ["Laura","Steve","Nina"]
-... }
->>> df2 = pd.DataFrame(department_info)
->>> print(df2)
-  Department       Location Manager
-0         HR       New york   Laura
-1         IT  San Fransisco   Steve
-2    Finance        Chicago    Nina
+import pandas as pd
+import numpy as np
 
->>> pd.concat([df,df2])
-      Name   Age     Dept   Salary  Promoted Salary Department       Location Manager
-0    Alice  25.0       HR  50000.0         505000.0        NaN            NaN     NaN
-1      Bob  30.0       IT  60000.0         605000.0        NaN            NaN     NaN
-2  Charlie  35.0  Finance  70000.0          70500.0        NaN            NaN     NaN
-3    David   NaN       IT  62000.0         625000.0        NaN            NaN     NaN
-4      Eve  29.0       HR      NaN              NaN        NaN            NaN     NaN
-5    Alice  25.0       HR  50000.0         505000.0        NaN            NaN     NaN
-0      NaN   NaN      NaN      NaN              NaN         HR       New york   Laura
-1      NaN   NaN      NaN      NaN              NaN         IT  San Fransisco   Steve
-2      NaN   NaN      NaN      NaN              NaN    Finance        Chicago    Nina
-  
->>> pd.concat([df,df2],axis = 1)
-      Name   Age     Dept   Salary  Promoted Salary Department       Location Manager
-0    Alice  25.0       HR  50000.0         505000.0         HR       New york   Laura
-1      Bob  30.0       IT  60000.0         605000.0         IT  San Fransisco   Steve
-2  Charlie  35.0  Finance  70000.0          70500.0    Finance        Chicago    Nina
-3    David   NaN       IT  62000.0         625000.0        NaN            NaN     NaN
-4      Eve  29.0       HR      NaN              NaN        NaN            NaN     NaN
-5    Alice  25.0       HR  50000.0         505000.0        NaN            NaN     NaN
+print("=" * 60)
+print("JOINS AND MERGES IN PANDAS")
+print("=" * 60)
 
->>> pd.merge(df,df2,on = "Dept")
-      Name   Age     Dept   Salary  Promoted Salary       Location Manager
-0    Alice  25.0       HR  50000.0         505000.0       New york   Laura
-1      Bob  30.0       IT  60000.0         605000.0  San Fransisco   Steve
-2  Charlie  35.0  Finance  70000.0          70500.0        Chicago    Nina
-3    David   NaN       IT  62000.0         625000.0  San Fransisco   Steve
-4      Eve  29.0       HR      NaN              NaN       New york   Laura
-5    Alice  25.0       HR  50000.0         505000.0       New york   Laura
+# ---------------------------------------------------
+# Employee Data
+# ---------------------------------------------------
 
-JOINS
+employee_data = {
+    "Name": ["Alice", "Bob", "Charlie", "David", "Eve", "Alice"],
+    "Age": [25, 30, 35, np.nan, 29, 25],
+    "Dept": ["HR", "IT", "Finance", "IT", "HR", "HR"],
+    "Salary": [50000, 60000, 70000, 62000, np.nan, 50000]
+}
+
+df = pd.DataFrame(employee_data)
+
+df["Promoted Salary"] = df["Salary"] + 5000
+
+print("Employee DataFrame:")
+print(df)
+
+# ---------------------------------------------------
+# Department Data
+# ---------------------------------------------------
+
+department_info = {
+    "Dept": ["HR", "IT", "Finance"],
+    "Location": ["New York", "San Francisco", "Chicago"],
+    "Manager": ["Laura", "Steve", "Nina"]
+}
+
+df2 = pd.DataFrame(department_info)
+
+print("\nDepartment DataFrame:")
+print(df2)
+
+# ===================================================
+# CONCATENATION
+# ===================================================
+
+print("\n" + "=" * 60)
+print("1. CONCAT (axis=0)")
+print("=" * 60)
+
+print(pd.concat([df, df2]))
+
+print("\n" + "=" * 60)
+print("2. CONCAT (axis=1)")
+print("=" * 60)
+
+print(pd.concat([df, df2], axis=1))
+
+# ===================================================
+# MERGE
+# ===================================================
+
+print("\n" + "=" * 60)
+print("3. MERGE")
+print("=" * 60)
+
+print(pd.merge(df, df2, on="Dept"))
+
+# ===================================================
+# INNER JOIN
+# ===================================================
+
+print("\n" + "=" * 60)
+print("4. INNER JOIN")
+print("=" * 60)
+
+print(pd.merge(df, df2, on="Dept", how="inner"))
+
+# ===================================================
+# LEFT JOIN
+# ===================================================
+
+print("\n" + "=" * 60)
+print("5. LEFT JOIN")
+print("=" * 60)
+
+print(pd.merge(df, df2, on="Dept", how="left"))
+
+# ===================================================
+# RIGHT JOIN
+# ===================================================
+
+print("\n" + "=" * 60)
+print("6. RIGHT JOIN")
+print("=" * 60)
+
+print(pd.merge(df, df2, on="Dept", how="right"))
+
+# ===================================================
+# OUTER JOIN
+# ===================================================
+
+print("\n" + "=" * 60)
+print("7. OUTER JOIN")
+print("=" * 60)
+
+print(pd.merge(df, df2, on="Dept", how="outer"))
+
+# ===================================================
+# NOTES
+# ===================================================
+
+print("\n" + "=" * 60)
+print("NOTES")
+print("=" * 60)
+
+print("""
+concat(axis=0)
+    Combines DataFrames vertically (adds rows).
+
+concat(axis=1)
+    Combines DataFrames horizontally (adds columns).
+
+merge()
+    Combines DataFrames using a common column.
+
 INNER JOIN
->>> pd.merge(df,df2,on = "Dept",how = "inner")
-      Name   Age     Dept   Salary  Promoted Salary       Location Manager
-0    Alice  25.0       HR  50000.0         505000.0       New york   Laura
-1      Bob  30.0       IT  60000.0         605000.0  San Fransisco   Steve
-2  Charlie  35.0  Finance  70000.0          70500.0        Chicago    Nina
-3    David   NaN       IT  62000.0         625000.0  San Fransisco   Steve
-4      Eve  29.0       HR      NaN              NaN       New york   Laura
-5    Alice  25.0       HR  50000.0         505000.0       New york   Laura
-
-RIGHT JOIN
->>> pd.merge(df,df2,on = "Dept",how = "right")
-      Name   Age     Dept   Salary  Promoted Salary       Location Manager
-0    Alice  25.0       HR  50000.0         505000.0       New york   Laura
-1      Eve  29.0       HR      NaN              NaN       New york   Laura
-2    Alice  25.0       HR  50000.0         505000.0       New york   Laura
-3      Bob  30.0       IT  60000.0         605000.0  San Fransisco   Steve
-4    David   NaN       IT  62000.0         625000.0  San Fransisco   Steve
-5  Charlie  35.0  Finance  70000.0          70500.0        Chicago    Nina
-  
-OUTER JOIN
->>> pd.merge(df,df2,on = "Dept",how = "outer")
-      Name   Age     Dept   Salary  Promoted Salary       Location Manager
-0  Charlie  35.0  Finance  70000.0          70500.0        Chicago    Nina
-1    Alice  25.0       HR  50000.0         505000.0       New york   Laura
-2      Eve  29.0       HR      NaN              NaN       New york   Laura
-3    Alice  25.0       HR  50000.0         505000.0       New york   Laura
-4      Bob  30.0       IT  60000.0         605000.0  San Fransisco   Steve
-5    David   NaN       IT  62000.0         625000.0  San Fransisco   Steve
+    Returns only matching records.
 
 LEFT JOIN
->>> pd.merge(df,df2,on = "Dept",how = "left")
-      Name   Age     Dept   Salary  Promoted Salary       Location Manager
-0    Alice  25.0       HR  50000.0         505000.0       New york   Laura
-1      Bob  30.0       IT  60000.0         605000.0  San Fransisco   Steve
-2  Charlie  35.0  Finance  70000.0          70500.0        Chicago    Nina
-3    David   NaN       IT  62000.0         625000.0  San Fransisco   Steve
-4      Eve  29.0       HR      NaN              NaN       New york   Laura
-5    Alice  25.0       HR  50000.0         505000.0       New york   Laura
+    Returns all rows from the left DataFrame.
+
+RIGHT JOIN
+    Returns all rows from the right DataFrame.
+
+OUTER JOIN
+    Returns all rows from both DataFrames.
+""")

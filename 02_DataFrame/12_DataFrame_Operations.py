@@ -1,28 +1,44 @@
-shape:
->>> df.shape
-(6, 3)
+import pandas as pd
+import numpy as np
 
-Information:
->>> df.info()
-<class 'pandas.core.frame.DataFrame'>
-RangeIndex: 6 entries, 0 to 5
-Data columns (total 3 columns):
- #   Column      Non-Null Count  Dtype
----  ------      --------------  -----
- 0   Name        6 non-null      object
- 1   Department  6 non-null      object
- 2   Salary      5 non-null      float64
-dtypes: float64(1), object(2)
-memory usage: 276.0+ bytes
+print("=" * 60)
+print("DATAFRAME OPERATIONS")
+print("=" * 60)
 
-Describe:
->>> df.describe()
-             Salary
-count      5.000000
-mean   58400.000000
-std     8532.291603
-min    50000.000000
-25%    50000.000000
-50%    60000.000000
-75%    62000.000000
-max    70000.000000
+# Creating a dictionary
+data = {
+    "Name": ["Alice", "Bob", "Charlie", "David", "Eve", "Alice"],
+    "Age": [25, 30, 35, np.nan, 29, 25],
+    "Department": ["HR", "IT", "Finance", "IT", "HR", "HR"],
+    "Salary": [50000, 60000, 70000, 62000, np.nan, 50000]
+}
+
+# Creating the DataFrame
+df = pd.DataFrame(data)
+
+# Dropping the Age column
+df.drop("Age", axis=1, inplace=True)
+
+print("DataFrame:")
+print(df)
+
+# ---------------------------------------------------
+# Shape
+# ---------------------------------------------------
+
+print("\nShape of the DataFrame:")
+print(df.shape)
+
+# ---------------------------------------------------
+# Information
+# ---------------------------------------------------
+
+print("\nDataFrame Information:")
+df.info()
+
+# ---------------------------------------------------
+# Statistical Summary
+# ---------------------------------------------------
+
+print("\nStatistical Summary (describe):")
+print(df.describe())

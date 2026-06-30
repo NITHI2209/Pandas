@@ -1,31 +1,20 @@
->>> import pandas as pd
->>> s = pd.Series([10,20,30,40,50])
->>> print(s)
-0    10
-1    20
-2    30
-3    40
-4    50
-dtype: int64
+import pandas as pd
 
-Type of data:
->>> s.dtype
-dtype('int64')
-  
-Identifying values of the series:
->>> s.values
-array([10, 20, 30, 40, 50])
+# Creating a Series
+s = pd.Series([10, 20, 30, 40, 50])
 
-Index:
->>> s.index
-RangeIndex(start=0, stop=5, step=1)
+print("Series:")
+print(s)
 
-Assinging name to the column:
->>> s.name = "numbers"
->>> print(s)
-0    10
-1    20
-2    30
-3    40
-4    50
-Name: numbers, dtype: int64
+print("\nType of data:")
+print(s.dtype)
+
+print("\nIdentifying values of the Series:")
+print(s.values)
+
+print("\nIndex:")
+print(s.index)
+
+print("\nAssigning name to the Series:")
+s.name = "numbers"
+print(s)

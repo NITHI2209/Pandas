@@ -1,9 +1,41 @@
->>> df["Promoted Salary"] = df["Salary"] * 10
->>> print(df)
-      Name   Age     Dept   Salary  Promoted Salary
-0    Alice  25.0       HR  50000.0         500000.0
-1      Bob  30.0       IT  60000.0         600000.0
-2  Charlie  35.0  Finance  70000.0         700000.0
-3    David   NaN       IT  62000.0         620000.0
-4      Eve  29.0       HR      NaN              NaN
-5    Alice  25.0       HR  50000.0         500000.0
+import pandas as pd
+import numpy as np
+
+print("=" * 60)
+print("ADDING A NEW COLUMN")
+print("=" * 60)
+
+# Creating a dictionary
+data = {
+    "Name": ["Alice", "Bob", "Charlie", "David", "Eve", "Alice"],
+    "Age": [25, 30, 35, np.nan, 29, 25],
+    "Dept": ["HR", "IT", "Finance", "IT", "HR", "HR"],
+    "Salary": [50000, 60000, 70000, 62000, np.nan, 50000]
+}
+
+# Creating the DataFrame
+df = pd.DataFrame(data)
+
+print("Original DataFrame:")
+print(df)
+
+# ---------------------------------------------------
+# Adding a New Column
+# ---------------------------------------------------
+
+print("\nAdding a new column: 'Promoted Salary'...\n")
+
+df["Promoted Salary"] = df["Salary"] * 10
+
+print("Updated DataFrame:")
+print(df)
+
+# ---------------------------------------------------
+# Explanation
+# ---------------------------------------------------
+
+print("\nNote:")
+print("A new column can be created by assigning values")
+print("to a new column name.")
+print("Here, 'Promoted Salary' is calculated by")
+print("multiplying the 'Salary' column by 10.")

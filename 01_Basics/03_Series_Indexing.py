@@ -1,19 +1,30 @@
-Indexing:
->>> s[0]
-np.int64(10)
+import pandas as pd
 
->>> s[0:2]
-0    10
-1    20
-Name: numbers, dtype: int64
+print("=" * 60)
+print("SERIES INDEXING")
+print("=" * 60)
 
-Indexing using "iloc" function:
-iloc- location based indexing - through index value it identify the location
->>> s.iloc[3]
-np.int64(40)
->>> s.iloc[[1,2,4]]
-1    20
-2    30
-4    50
-Name: numbers, dtype: int64
+# Creating a Series
+s = pd.Series([10, 20, 30, 40, 50], name="numbers")
 
+print("Series:")
+print(s)
+
+# ----------------- Basic Indexing -----------------
+print("\nBasic Indexing:")
+
+print("\nFirst Element (s[0]):")
+print(s[0])
+
+print("\nSlicing (s[0:2]):")
+print(s[0:2])
+
+# ----------------- iloc Indexing -----------------
+print("\nIndexing using iloc:")
+print("iloc - Location based indexing (access values using index positions)")
+
+print("\nElement at index 3:")
+print(s.iloc[3])
+
+print("\nElements at index positions 1, 2, and 4:")
+print(s.iloc[[1, 2, 4]])

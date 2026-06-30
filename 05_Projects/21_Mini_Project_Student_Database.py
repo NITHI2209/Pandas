@@ -1,142 +1,108 @@
-#MINI PROJECT OF ATTRITON RATE ANALYSIS
->>> import pandas as pd
->>> import numpy as np
-#DATA SET
->>> data = {
-... "EmployeeID" : [101,102,103,104,105,106,107,108],
-... "Age" : [25,30,28,35,np.nan,40,29,32],
-... "Department" :["HR","IT","Finance","IT","HR","Finance","IT","HR"],
-... "Salary" : [30000,50000,45000,60000,32000,np.nan,52000,35000],
-... "Attrition" : ["Yes","No","No","Yes","No","No","Yes","No"]
-... }
->>> df = pd.DataFrame(data)
->>> print(df)
-   EmployeeID   Age Department   Salary Attrition
-0         101  25.0         HR  30000.0       Yes
-1         102  30.0         IT  50000.0        No
-2         103  28.0    Finance  45000.0        No
-3         104  35.0         IT  60000.0       Yes
-4         105   NaN         HR  32000.0        No
-5         106  40.0    Finance      NaN        No
-6         107  29.0         IT  52000.0       Yes
-7         108  32.0         HR  35000.0        No
+# ============================================================
+# MINI PROJECT: EMPLOYEE ATTRITION RATE ANALYSIS USING PANDAS
+# ============================================================
 
-#BASIC DATA EXPLORATION 
->>> df.head()
-   EmployeeID   Age Department   Salary Attrition
-0         101  25.0         HR  30000.0       Yes
-1         102  30.0         IT  50000.0        No
-2         103  28.0    Finance  45000.0        No
-3         104  35.0         IT  60000.0       Yes
-4         105   NaN         HR  32000.0        No
-  
->>> df.tail()
-   EmployeeID   Age Department   Salary Attrition
-3         104  35.0         IT  60000.0       Yes
-4         105   NaN         HR  32000.0        No
-5         106  40.0    Finance      NaN        No
-6         107  29.0         IT  52000.0       Yes
-7         108  32.0         HR  35000.0        No
-  
->>> df.info
-<bound method DataFrame.info of    EmployeeID   Age Department   Salary Attrition
-0         101  25.0         HR  30000.0       Yes
-1         102  30.0         IT  50000.0        No
-2         103  28.0    Finance  45000.0        No
-3         104  35.0         IT  60000.0       Yes
-4         105   NaN         HR  32000.0        No
-5         106  40.0    Finance      NaN        No
-6         107  29.0         IT  52000.0       Yes
-7         108  32.0         HR  35000.0        No>
+import pandas as pd
+import numpy as np
 
->>> df.shape
-(8, 5)
+# ------------------------------------------------------------
+# CREATE DATASET
+# ------------------------------------------------------------
 
->>> df.describe()
-       EmployeeID        Age        Salary
-count     8.00000   7.000000      7.000000
-mean    104.50000  31.285714  43428.571429
-std       2.44949   4.956958  11370.387605
-min     101.00000  25.000000  30000.000000
-25%     102.75000  28.500000  33500.000000
-50%     104.50000  30.000000  45000.000000
-75%     106.25000  33.500000  51000.000000
-max     108.00000  40.000000  60000.000000
+data = {
+    "EmployeeID": [101, 102, 103, 104, 105, 106, 107, 108],
+    "Age": [25, 30, 28, 35, np.nan, 40, 29, 32],
+    "Department": ["HR", "IT", "Finance", "IT", "HR", "Finance", "IT", "HR"],
+    "Salary": [30000, 50000, 45000, 60000, 32000, np.nan, 52000, 35000],
+    "Attrition": ["Yes", "No", "No", "Yes", "No", "No", "Yes", "No"]
+}
 
-#HANDLING MISSING VALUES
->>> df.fillna(df["Age"].mean())
-   EmployeeID        Age Department        Salary Attrition
-0         101  25.000000         HR  30000.000000       Yes
-1         102  30.000000         IT  50000.000000        No
-2         103  28.000000    Finance  45000.000000        No
-3         104  35.000000         IT  60000.000000       Yes
-4         105  31.285714         HR  32000.000000        No
-5         106  40.000000    Finance     31.285714        No
-6         107  29.000000         IT  52000.000000       Yes
-7         108  32.000000         HR  35000.000000        No
+df = pd.DataFrame(data)
 
->>> df["Salary"].fillna(df["Salary"].median())
-0    30000.0
-1    50000.0
-2    45000.0
-3    60000.0
-4    32000.0
-5    45000.0
-6    52000.0
-7    35000.0
-Name: Salary, dtype: float64
+print("=" * 60)
+print("EMPLOYEE ATTRITION DATASET")
+print("=" * 60)
+print(df)
 
-#CHECK FOR DUPLICATES
->>> df_dup = df[df.duplicated()]
->>> print(df_dup)
-Empty DataFrame
-Columns: [EmployeeID, Age, Department, Salary, Attrition]
-Index: []
+# ------------------------------------------------------------
+# BASIC DATA EXPLORATION
+# ------------------------------------------------------------
 
-ATTRITON ANALYSIS
-Total employees
->>> df["EmployeeID"].count()
-np.int64(8)
+print("\nFirst 5 Records")
+print(df.head())
 
-#ATTRITION COUNT
->>> df["Attrition"].value_counts()
-Attrition
-No     5
-Yes    3
-Name: count, dtype: int64
+print("\nLast 5 Records")
+print(df.tail())
 
-#ATTRITION BY DEPARTMENT
->>> df.groupby("Department")["Attrition"].value_counts()
-Department  Attrition
-Finance     No           2
-HR          No           2
-            Yes          1
-IT          Yes          2
-            No           1
-Name: count, dtype: int64
+print("\nDataset Information")
+df.info()
 
-#SALARY ANALYSIS:
->>> df["Salary"].mean()
-np.float64(43428.57142857143)
->>> df.groupby("Department")["Salary"].mean()
-Department
-Finance    45000.000000
-HR         32333.333333
-IT         54000.000000
-Name: Salary, dtype: float64
+print("\nShape of Dataset")
+print(df.shape)
 
-#AGE ANALYSIS:
->>> df["Age"].mean()
-np.float64(31.285714285714285)
->>> df.groupby("Attrition")["Age"].mean()
-Attrition
-No     32.500000
-Yes    29.666667
-Name: Age, dtype: float64
+print("\nStatistical Summary")
+print(df.describe())
 
-#ATTRITION RATE:
->>> attrition_rate = (df["Attrition"] == "Yes").mean()*100
->>> print(attrition_rate)
-37.5
+# ------------------------------------------------------------
+# HANDLING MISSING VALUES
+# ------------------------------------------------------------
 
+# Fill missing Age with mean
+df["Age"].fillna(df["Age"].mean(), inplace=True)
 
+# Fill missing Salary with median
+df["Salary"].fillna(df["Salary"].median(), inplace=True)
+
+print("\nDataset After Handling Missing Values")
+print(df)
+
+# ------------------------------------------------------------
+# CHECK DUPLICATES
+# ------------------------------------------------------------
+
+duplicates = df[df.duplicated()]
+
+print("\nDuplicate Records")
+print(duplicates)
+
+# ------------------------------------------------------------
+# ATTRITION ANALYSIS
+# ------------------------------------------------------------
+
+print("\nTotal Employees")
+print(df["EmployeeID"].count())
+
+print("\nAttrition Count")
+print(df["Attrition"].value_counts())
+
+print("\nAttrition by Department")
+print(df.groupby("Department")["Attrition"].value_counts())
+
+# ------------------------------------------------------------
+# SALARY ANALYSIS
+# ------------------------------------------------------------
+
+print("\nAverage Salary")
+print(df["Salary"].mean())
+
+print("\nAverage Salary by Department")
+print(df.groupby("Department")["Salary"].mean())
+
+# ------------------------------------------------------------
+# AGE ANALYSIS
+# ------------------------------------------------------------
+
+print("\nAverage Age")
+print(df["Age"].mean())
+
+print("\nAverage Age by Attrition")
+print(df.groupby("Attrition")["Age"].mean())
+
+# ------------------------------------------------------------
+# ATTRITION RATE
+# ------------------------------------------------------------
+
+attrition_rate = (df["Attrition"] == "Yes").mean() * 100
+
+print("\nOverall Attrition Rate")
+print(f"{attrition_rate:.2f}%")

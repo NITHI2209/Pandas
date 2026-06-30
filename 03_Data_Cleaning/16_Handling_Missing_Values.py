@@ -1,77 +1,99 @@
-MISSING VALUES:
-1)Getting rid of them -> dropna()
-2)Filling them up -> fillna()
-3)Forward filling -> ffill()   # fills the null value by before value but shows error if first value is null
-4)Backward filling -> bfill()  #fills the null value by after value but shows error if last value is null
+import pandas as pd
+import numpy as np
 
- dropna()
->>> df.dropna()  #drops the row which has null value
-      Name   Age     Dept   Salary  Promoted Salary
-0    Alice  25.0       HR  50000.0         500000.0
-1      Bob  30.0       IT  60000.0         600000.0
-2  Charlie  35.0  Finance  70000.0         700000.0
-5    Alice  25.0       HR  50000.0         500000.0
->>> df.dropna(how="any")   #drops the row which has null value
-      Name   Age     Dept   Salary  Promoted Salary
-0    Alice  25.0       HR  50000.0         500000.0
-1      Bob  30.0       IT  60000.0         600000.0
-2  Charlie  35.0  Finance  70000.0         700000.0
-5    Alice  25.0       HR  50000.0         500000.0
->>> df.dropna(how = "all") # drops  the row if the entire row contains null value
-      Name   Age     Dept   Salary  Promoted Salary
-0    Alice  25.0       HR  50000.0         500000.0
-1      Bob  30.0       IT  60000.0         600000.0
-2  Charlie  35.0  Finance  70000.0         700000.0
-3    David   NaN       IT  62000.0         620000.0
-4      Eve  29.0       HR      NaN              NaN
-5    Alice  25.0       HR  50000.0         500000.0
+print("=" * 60)
+print("HANDLING MISSING VALUES")
+print("=" * 60)
 
- fillna()
->>> df.fillna(0)
-      Name   Age     Dept   Salary  Promoted Salary
-0    Alice  25.0       HR  50000.0         500000.0
-1      Bob  30.0       IT  60000.0         600000.0
-2  Charlie  35.0  Finance  70000.0         700000.0
-3    David   0.0       IT  62000.0         620000.0
-4      Eve  29.0       HR      0.0              0.0
-5    Alice  25.0       HR  50000.0         500000.0
->>> df.fillna(df["Age"].mean())
-      Name   Age     Dept   Salary  Promoted Salary
-0    Alice  25.0       HR  50000.0         500000.0
-1      Bob  30.0       IT  60000.0         600000.0
-2  Charlie  35.0  Finance  70000.0         700000.0
-3    David  28.8       IT  62000.0         620000.0
-4      Eve  29.0       HR     28.8             28.8
-5    Alice  25.0       HR  50000.0         500000.0
->>> df["Salary"].fillna(df["Salary"].median())
-0    50000.0
-1    60000.0
-2    70000.0
-3    62000.0
-4    60000.0
-5    50000.0
+# Creating a dictionary
+data = {
+    "Name": ["Alice", "Bob", "Charlie", "David", "Eve", "Alice"],
+    "Age": [25, 30, 35, np.nan, 29, 25],
+    "Dept": ["HR", "IT", "Finance", "IT", "HR", "HR"],
+    "Salary": [50000, 60000, 70000, 62000, np.nan, 50000]
+}
 
-ffill()
->>> df["Age"].fillna(method = "ffill")
-<python-input-17>:1: FutureWarning: Series.fillna with 'method' is deprecated and will raise in a future version. Use obj.ffill() or obj.bfill() instead.
-  df["Age"].fillna(method = "ffill")
-0    25.0
-1    30.0
-2    35.0
-3    35.0
-4    29.0
-5    25.0
-Name: Age, dtype: float64
+# Creating DataFrame
+df = pd.DataFrame(data)
 
-bfill()
->>> df["Age"].fillna(method = "bfill")
-<python-input-18>:1: FutureWarning: Series.fillna with 'method' is deprecated and will raise in a future version. Use obj.ffill() or obj.bfill() instead.
-  df["Age"].fillna(method = "bfill")
-0    25.0
-1    30.0
-2    35.0
-3    29.0
-4    29.0
-5    25.0
-Name: Age, dtype: float64
+# Adding a new column
+df["Promoted Salary"] = df["Salary"] * 10
 
+print("Original DataFrame:")
+print(df)
+
+# ---------------------------------------------------
+# dropna()
+# ---------------------------------------------------
+
+print("\n" + "=" * 60)
+print("1. dropna()")
+print("=" * 60)
+
+print("\nRows containing NO missing values:")
+print(df.dropna())
+
+print("\ndropna(how='any'):")
+print(df.dropna(how="any"))
+
+print("\ndropna(how='all'):")
+print(df.dropna(how="all"))
+
+# ---------------------------------------------------
+# fillna()
+# ---------------------------------------------------
+
+print("\n" + "=" * 60)
+print("2. fillna()")
+print("=" * 60)
+
+print("\nReplacing missing values with 0:")
+print(df.fillna(0))
+
+print("\nReplacing missing values with Age mean:")
+print(df.fillna(df["Age"].mean()))
+
+print("\nReplacing missing Salary with Salary median:")
+print(df["Salary"].fillna(df["Salary"].median()))
+
+# ---------------------------------------------------
+# Forward Fill
+# ---------------------------------------------------
+
+print("\n" + "=" * 60)
+print("3. Forward Fill (ffill)")
+print("=" * 60)
+
+print("\nAge column after forward fill:")
+print(df["Age"].ffill())
+
+# ---------------------------------------------------
+# Backward Fill
+# ---------------------------------------------------
+
+print("\n" + "=" * 60)
+print("4. Backward Fill (bfill)")
+print("=" * 60)
+
+print("\nAge column after backward fill:")
+print(df["Age"].bfill())
+
+# ---------------------------------------------------
+# Notes
+# ---------------------------------------------------
+
+print("\n" + "=" * 60)
+print("NOTES")
+print("=" * 60)
+
+print("""
+1. dropna()  -> Removes rows containing missing values.
+
+2. fillna()  -> Replaces missing values with a specified value.
+
+3. ffill()   -> Uses the previous valid value to fill missing data.
+                (Doesn't fill the first value if it's missing.)
+
+4. bfill()   -> Uses the next valid value to fill missing data.
+                (Doesn't fill the last value if it's missing.)
+""")
