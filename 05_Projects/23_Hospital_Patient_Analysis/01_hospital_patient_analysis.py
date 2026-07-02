@@ -169,4 +169,172 @@ print(df[[
 # ---------------------------------------------
 # Feature 2: Age Group
 # ---------------------------------------------
+df["Age_Group"] = np.where(
+    df["Age"] < 18, "Child",
+    np.where(
+        df["Age"] <= 35 ,"Young Adult",
+    np.where(
+        df["Age"] <= 50, "Adult",
+        "Senior Citizen"
+        )
+    )
+)
+print("\nAge Group")
+print(df[["Patient_Name", "Age", "Age_Group"]])
+
+# ---------------------------------------------
+# Feature 3: Cost Category
+# ---------------------------------------------
+
+df["Cost_Category"] = np.where(
+    df["Treatment_Cost"] < 30000 , "Low",
+    np.where (
+        df["Treatment_Cost"] <= 60000 ,"Medium",
+        "High "
+    )
+
+)
+
+print("\nCost Category")
+print(df[[
+    "Patient_Name",
+    "Treatment_Cost",
+    "Cost_Category"
+]])
+
+# ---------------------------------------------
+# Feature 4: Cost Per Day
+# ---------------------------------------------
+
+df["Cost_Per_Day"] = (
+    df["Treatment_Cost"] / df["Hospital_Stay_Days"]
+)
+
+print("\nCost Per Day")
+print(df[[
+    "Patient_Name",
+    "Treatment_Cost",
+    "Hospital_Stay_Days",
+    "Cost_Per_Day"
+]])
+
+# ---------------------------------------------
+# Feature 5: Insurance Status
+# ---------------------------------------------
+
+df["Insurance_Status"] = np.where(
+    df["Insurance"] == "Yes",
+    "Insured",
+    "Not Insured"
+)
+
+print("\nInsurance Status")
+print(df[[
+    "Patient_Name",
+    "Insurance",
+    "Insurance_Status"
+]])
+
+# ---------------------------------------------
+# Business Analysis 1: Total Number of Patients
+# ---------------------------------------------
+
+print("\nTotal Number of Patients")
+print(df["Patient_ID"].count())
+
+# ---------------------------------------------
+# Business Analysis 2: Department-wise Patient Count
+# ---------------------------------------------
+print("\nDepartment-Wise Patient Count")
+print(df["Department"].value_counts())
+
+# ---------------------------------------------
+# Business Analysis 3: Most Common Disease
+# ---------------------------------------------
+
+print("\nDisease Frequency")
+print(df["Disease"].value_counts())
+
+# ---------------------------------------------
+# Business Analysis 4: Average Treatment Cost
+# ---------------------------------------------
+
+print("\nAverage Treatment Cost")
+print(df["Treatment_Cost"].mean())
+
+# ---------------------------------------------
+# Business Analysis 5: Average Hospital Stay
+# ---------------------------------------------
+
+print("\nAverage Hospital Stay")
+print(df["Hospital_Stay_Days"].mean())
+
+# ---------------------------------------------
+# Business Analysis 6: Highest Treatment Cost
+# ---------------------------------------------
+
+print("\nPatient with Highest Treatment Cost")
+
+highest_cost = df[df["Treatment_Cost"] == df["Treatment_Cost"].max()]
+
+print(highest_cost[[
+    "Patient_Name",
+    "Department",
+    "Disease",
+    "Treatment_Cost"
+]])
+
+# ---------------------------------------------
+# Business Analysis 7: Patient with Lowest Treatment Cost
+# ---------------------------------------------
+
+print("\nPatient with Lowest Treatment Cost")
+
+lowest_cost = df[df["Treatment_Cost"] == df["Treatment_Cost"].min()]
+
+print(lowest_cost[[
+    "Patient_Name",
+    "Department",
+    "Disease",
+    "Treatment_Cost"
+]])
+
+# ---------------------------------------------
+# Business Analysis 9: Average Hospital Stay by Department
+# ---------------------------------------------
+
+print("\nAverage Hospital Stay by Department")
+
+print(df.groupby("Department")["Hospital_Stay_Days"].mean())
+
+# ---------------------------------------------
+# Business Analysis 10: Insurance Coverage Summary
+# ---------------------------------------------
+
+print("\nInsurance Coverage Summary")
+
+print(df["Insurance_Status"].value_counts())
+
+# ---------------------------------------------
+# Business Analysis 11: Gender-wise Patient Count
+# ---------------------------------------------
+
+print("\nGender-wise Patient Count")
+
+print(df["Gender"].value_counts())
+
+# ---------------------------------------------
+# Business Analysis 12: Top 5 Most Expensive Treatments
+# ---------------------------------------------
+
+print("\nTop 5 Most Expensive Treatments")
+
+print(
+    df.nlargest(5, "Treatment_Cost")[[
+        "Patient_Name",
+        "Department",
+        "Disease",
+        "Treatment_Cost"
+    ]]
+)
 
